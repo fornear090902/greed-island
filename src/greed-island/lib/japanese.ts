@@ -1,4 +1,6 @@
 
 export const library = {
-    title: 'Greed Island'
+    title: 'Greed Island',
+    welcomeMessage: 'Welcome, ',
+    honorificSymbol: 'さん'
 }
