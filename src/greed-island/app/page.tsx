@@ -7,7 +7,7 @@ export default function Home() {
   const user = new User(uuidv7(), 'ゲスト', 'です男')
 
   return (
-    <div className="p-8">
+    <div>
       <Header user={user} />
     </div>
   )
