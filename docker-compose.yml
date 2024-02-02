@@ -5,6 +5,6 @@ services:
     build: .
     tty: true
     volumes:
-      - ./src:/app
+      - .:/app
     ports:
       - "3000:3000"
