@@ -1,4 +1,8 @@
+import { Warrior } from "@/domain/job/Warrior";
+import { Experience } from "@/domain/player/Experience";
+import { Level } from "@/domain/player/Level";
 import { Player } from "@/domain/player/Player";
+import { Status } from "@/domain/player/Status";
 import { library } from "@/lib/japanese";
 import type { Dispatch } from "react";
 import { uuidv7 } from "uuidv7";
@@ -10,20 +14,20 @@ interface Props {
 
 export function HeaderMenu(props: Props) {
 
-    const defaultUser = new Player(uuidv7(), 'ゲスト', 'です男')
+    const defaultUser = getDefaultUser()
 
     const login = () => props.setUser(defaultUser)
     const logout = () => props.setUser(null)
 
     return (
-        <div className="flex flex-row h-full p-2 font-bold">
+        <div className="header-menu">
             {
                 props.user &&
-                <div className="flex flex-col mx-1 justify-center">
+                <div className="welcome-msg">
                     <div>{library.welcomeMessage} {props.user.fullName} {library.honorificSymbol}</div>
                 </div>
             }
-            <div className="flex flex-col justify-center mx-1 my-2 px-2 hover:bg-gray-300 rounded-md">
+            <div className="login-btn">
                 {
                     props.user
                         ? <button onClick={logout}>{library.logout}</button>
@@ -33,4 +37,13 @@ export function HeaderMenu(props: Props) {
         </div>
     )
 
+}
+
+const getDefaultUser = () => {
+    const level = new Level(1)
+    const expereince = new Experience(0)
+    const status = new Status(100, 50, 10, 10)
+    const job = new Warrior()
+
+    return new Player(uuidv7(), 'ゲスト', 'です男', level, status, expereince, job)
 }

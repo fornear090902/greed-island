@@ -9,8 +9,8 @@ export class Player {
         private id: string,
         private last_name: string,
         private first_name: string,
-        private status: Status,
         private level: Level,
+        private status: Status,
         private experience: Experience,
         private job: Job
     ) {}

@@ -25,4 +25,25 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .header {
+    @apply border-b-2 border-b-gray-300 bg-gray-200 flex flex-row justify-between content-end
+  }
+  .product-title {
+    @apply text-4xl font-bold p-4
+  }
+  .header-menu {
+    @apply flex flex-row h-full p-2 font-bold
+  }
+  .welcome-msg {
+    @apply flex flex-col justify-center mx-1
+  }
+  .login-btn {
+    @apply flex flex-col justify-center mx-1 my-2 px-2 rounded-md hover:bg-gray-300 
+  }
+  .body-frame {
+    @apply container px-4 py-2 flex-grow
+  }
+  .footer {
+    @apply sticky bottom-0 px-4 py-2 text-center border-t-gray-300 bg-gray-200 text-gray-500 border-t-2
+  }
 }

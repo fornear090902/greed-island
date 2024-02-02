@@ -23,7 +23,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Header user={user} setUser={setUser} />
-        <div className="container px-4 py-2 flex-grow">
+        <div className="body-frame">
           {children}
         </div>
         <Footer />
