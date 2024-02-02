@@ -4,46 +4,37 @@ import { Level } from "@/domain/player/Level";
 import { Player } from "@/domain/player/Player";
 import { Status } from "@/domain/player/Status";
 import { library } from "@/lib/japanese";
-import type { Dispatch } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import type { Dispatch, MouseEventHandler } from "react";
 import { uuidv7 } from "uuidv7";
 
-interface Props {
-    user: Player | null,
-    setUser: Dispatch<Player | null>
-}
+export function HeaderMenu() {
 
-export function HeaderMenu(props: Props) {
+    const {data: session, status} = useSession()
 
-    const defaultUser = getDefaultUser()
-
-    const login = () => props.setUser(defaultUser)
-    const logout = () => props.setUser(null)
+    if (status === 'loading') {
+        return <div className="header-menu">
+            <div className="welcome-msg">Loading...</div>
+        </div>
+    }
 
     return (
         <div className="header-menu">
             {
-                props.user &&
+                // TODO: implement display full name.
+                session &&
                 <div className="welcome-msg">
-                    <div>{library.welcomeMessage} {props.user.fullName} {library.honorificSymbol}</div>
+                    <div>{library.welcomeMessage} ほげほげ {library.honorificSymbol}</div>
                 </div>
             }
             <div className="login-btn">
                 {
-                    props.user
-                        ? <button onClick={logout}>{library.logout}</button>
-                        : <button onClick={login}>{library.login}</button>
+                    session
+                        ? <button onClick={signOut as MouseEventHandler<HTMLButtonElement>}>{library.logout}</button>
+                        : <button onClick={signIn as MouseEventHandler<HTMLButtonElement>}>{library.login}</button>
                 }
             </div>
         </div>
     )
 
-}
-
-const getDefaultUser = () => {
-    const level = new Level(1)
-    const expereince = new Experience(0)
-    const status = new Status(100, 50, 10, 10)
-    const job = new Warrior()
-
-    return new Player(uuidv7(), 'ゲスト', 'です男', level, status, expereince, job)
 }

@@ -3,16 +3,11 @@ import { library } from "@/lib/japanese";
 import type { Dispatch } from "react";
 import { HeaderMenu } from "./HeaderMenu";
 
-interface Props {
-    user: Player | null,
-    setUser: Dispatch<Player | null>
-}
-
-export function Header(props: Props) {
+export function Header() {
     return (
         <div className="header">
             <h1 className="product-title">{library.title}</h1>
-            <HeaderMenu user={props.user} setUser={props.setUser}></HeaderMenu>
+            <HeaderMenu></HeaderMenu>
         </div>
     )
 }

@@ -9,6 +9,7 @@ export class Player {
         private id: string,
         private last_name: string,
         private first_name: string,
+        private email: string,
         private _level: Level,
         private status: Status,
         private experience: Experience,
