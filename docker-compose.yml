@@ -20,3 +20,13 @@ services:
       - "27017:27017"
     volumes:
       - ./data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+    ports:
+      - "8081:8081"
