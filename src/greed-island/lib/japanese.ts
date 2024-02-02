@@ -2,5 +2,7 @@
 export const library = {
     title: 'Greed Island',
     welcomeMessage: 'Welcome, ',
-    honorificSymbol: 'さん'
+    honorificSymbol: 'さん',
+    login: 'ログイン',
+    logout: 'ログアウト'
 }
