@@ -18,20 +18,20 @@ enum Job {
 }
 
 model Player {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
   lastName   String
   firstName  String
-  level      Int    @default(0)
-  experience Int    @default(0)
+  level      Int     @default(0)
+  experience Int     @default(0)
   job        Job
   status     Status?
 }
 
 model Status {
-  player Player? @relation(fields: [playerId], references: [id])
-  playerId String @id @map("_id") @db.ObjectId
-  hp    Int
-  mp    Int
-  atk   Int
-  def   Int
+  player   Player? @relation(fields: [playerId], references: [id])
+  playerId String  @id @map("_id") @db.ObjectId
+  hp       Int
+  mp       Int
+  atk      Int
+  def      Int
 }
