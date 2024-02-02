@@ -9,3 +9,29 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+enum Job {
+  warrior
+  wizard
+  fighter
+  merchant
+}
+
+model Player {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  lastName   String
+  firstName  String
+  level      Int    @default(0)
+  experience Int    @default(0)
+  job        Job
+  status     Status?
+}
+
+model Status {
+  player Player? @relation(fields: [playerId], references: [id])
+  playerId String @id @map("_id") @db.ObjectId
+  hp    Int
+  mp    Int
+  atk   Int
+  def   Int
+}
