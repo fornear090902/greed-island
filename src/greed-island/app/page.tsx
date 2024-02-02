@@ -1,9 +1,19 @@
+import { Status } from "@/components/player/template/Status"
+import { Player } from "@/domain/player/Player"
 
-export default function Home() {
+interface Props {
+  player: Player | null
+}
+
+export default function Home(props: Props) {
 
   return (
     <div>
-      Home
+      {
+        props.player
+          ? <Status player={props.player}></Status>
+          : <div>Not logged in</div>
+      }
     </div>
   )
 }

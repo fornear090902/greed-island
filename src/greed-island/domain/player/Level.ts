@@ -5,4 +5,8 @@ export class Level {
         private value: number
     ) {}
 
+    format() {
+        return 'Lv.' + this.value
+    }
+
 }

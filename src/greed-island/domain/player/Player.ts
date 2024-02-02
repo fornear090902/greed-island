@@ -9,7 +9,7 @@ export class Player {
         private id: string,
         private last_name: string,
         private first_name: string,
-        private level: Level,
+        private _level: Level,
         private status: Status,
         private experience: Experience,
         private job: Job
@@ -17,5 +17,9 @@ export class Player {
 
     get fullName() {
         return this.last_name + ' ' + this.first_name
+    }
+
+    get level() {
+        return this._level
     }
 }
