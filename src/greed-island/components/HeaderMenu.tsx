@@ -16,14 +16,14 @@ export function HeaderMenu(props: Props) {
     const logout = () => props.setUser(null)
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-row h-full p-2 font-bold">
             {
                 props.user &&
-                <div className="flex flex-col justify-end mx-2">
+                <div className="flex flex-col mx-1 justify-center">
                     <div>{library.welcomeMessage} {props.user.fullName} {library.honorificSymbol}</div>
                 </div>
             }
-            <div className="flex flex-col justify-end mx-2">
+            <div className="flex flex-col justify-center mx-1 my-2 px-2 hover:bg-gray-400 rounded-md">
                 {
                     props.user
                         ? <button onClick={logout}>{library.logout}</button>
