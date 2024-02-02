@@ -23,7 +23,7 @@ export function HeaderMenu(props: Props) {
                     <div>{library.welcomeMessage} {props.user.fullName} {library.honorificSymbol}</div>
                 </div>
             }
-            <div className="flex flex-col justify-center mx-1 my-2 px-2 hover:bg-gray-400 rounded-md">
+            <div className="flex flex-col justify-center mx-1 my-2 px-2 hover:bg-gray-300 rounded-md">
                 {
                     props.user
                         ? <button onClick={logout}>{library.logout}</button>
