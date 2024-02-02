@@ -2,7 +2,7 @@
 
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { User } from "@/domain/User";
+import { Player } from "@/domain/player/Player";
 import { Header } from "../components/Header";
 import { Footer } from "@/components/Footer";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [user, setUser] = useState<User|null>(null)
+  const [user, setUser] = useState<Player|null>(null)
 
   return (
     <html lang="ja">

@@ -1,16 +1,16 @@
-import { User } from "@/domain/User";
+import { Player } from "@/domain/player/Player";
 import { library } from "@/lib/japanese";
 import type { Dispatch } from "react";
 import { uuidv7 } from "uuidv7";
 
 interface Props {
-    user: User | null,
-    setUser: Dispatch<User | null>
+    user: Player | null,
+    setUser: Dispatch<Player | null>
 }
 
 export function HeaderMenu(props: Props) {
 
-    const defaultUser = new User(uuidv7(), 'ゲスト', 'です男')
+    const defaultUser = new Player(uuidv7(), 'ゲスト', 'です男')
 
     const login = () => props.setUser(defaultUser)
     const logout = () => props.setUser(null)
