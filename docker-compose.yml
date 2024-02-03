@@ -18,22 +18,20 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
-    command: mongod --replSet replSet --auth --keyFile /etc/mongod-keyfile
+    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
     volumes:
       - ./mongo/data/primary:/data/db
       - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+      - ./mongo/init/:/docker-entrypoint-initdb.d/:ro
     networks:
       - replset
     
   mongo-secondary:
     image: mongo:7.0
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27018:27017"
-    command: mongod --replSet replSet --auth --keyFile /etc/mongod-keyfile
+    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
     volumes:
       - ./mongo/data/secondary:/data/db
       - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
@@ -43,7 +41,9 @@ services:
   mongo-arbiter:
     image: mongo:7.0
     restart: always
-    command: mongod --replSet replSet --auth --keyFile /etc/mongod-keyfile
+    ports:
+      - "27019:27017"
+    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
     volumes:
       - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
     networks:
