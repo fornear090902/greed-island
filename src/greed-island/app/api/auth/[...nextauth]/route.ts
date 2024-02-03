@@ -6,21 +6,10 @@ import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
 import Google from "next-auth/providers/google";
 
-export interface IUser {
-  id: string;
-  email: string;
-  hashedPassword: string;
-}
-
-export interface IPlayer {
-  id: string;
-  email: string;
-}
-
 const options: NextAuthOptions = {
-  /* adapter: PrismaAdapter(prisma),*/
+  adapter: PrismaAdapter(prisma),
   providers: [
-    Credentials({
+    /* Credentials({
       name: "Credentials",
       credentials: {
         email: {
@@ -59,7 +48,7 @@ const options: NextAuthOptions = {
         }
         return null;
       },
-    }),
+    }), */
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
