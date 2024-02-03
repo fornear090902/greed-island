@@ -9,6 +9,7 @@ import Google from "next-auth/providers/google";
 const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
+    // email + password は公式非推奨かつめんどくさそうなのでいったん実装しない
     /* Credentials({
       name: "Credentials",
       credentials: {
