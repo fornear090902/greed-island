@@ -1,65 +1,68 @@
-import { Warrior } from "@/domain/job/Warrior";
-import { Experience } from "@/domain/player/Experience";
-import { Level } from "@/domain/player/Level";
-import { Status } from "@/domain/player/Status";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 import { uuidv7 } from "uuidv7";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from 'bcrypt';
+
+const prisma = new PrismaClient();
+
+export interface IUser {
+    id: string;
+    email: string;
+    hashedPassword: string;
+}
 
 export interface IPlayer {
     id: string;
-    last_name: string;
-    first_name: string;
     email: string;
-    level: Level;
-    status: Status;
-    experience: Experience;
-    job: Warrior;
 }
 
 const findUserByCredentials = (credentials: Record<'email' | 'password', string>): IPlayer | null => {
     const { email, password } = credentials;
 
     if (email === process.env.USER_EMAIL && password === process.env.USER_PASSWORD) {
-        const level = new Level(1);
-        const experience = new Experience(0);
-        const status = new Status(100, 50, 10, 10);
-        const job = new Warrior();
-
-        return {
-            id: uuidv7(),
-            last_name: 'ゲスト',
-            first_name: 'です男',
-            email,
-            level,
-            status,
-            experience,
-            job
-        };
+        return { id: uuidv7(), email };
     } else {
         return null;
     }
 };
 
 const options: NextAuthOptions = {
+    adapter: PrismaAdapter(prisma),
     providers: [
         Credentials({
-            name: 'email',
+            name: 'Credentials',
             credentials: {
                 email: { label: 'Email', type: 'email', placeholder: 'email@example.com' },
                 password: { label: 'Password', type: 'password' }
             },
-            authorize: async (credentials, req): Promise<IPlayer | null> => {
-                const user = credentials ? findUserByCredentials(credentials) : null;
+            authorize: async (credentials): Promise<IUser | null> => {
+                try {
+                    if (!credentials) {
+                        throw new Error('No credentials provided')
+                    }
 
-                if (user) {
-                    return user;
-                } else {
-                    return null;
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            email: credentials.email
+                        }
+                    })
+                    if (!user) {
+                        throw new Error('No user found')
+                    }
+                    const isCorrectPassword = await bcrypt.compare(credentials.password, user.hashedPassword)
+                    if (!isCorrectPassword) {
+                        throw new Error('Invalid Credentials')
+                    }
+                    return user
+                } catch (e) {
+                    console.error(e)
                 }
+                return null
             }
-        })
+        }),
     ]
 };
 

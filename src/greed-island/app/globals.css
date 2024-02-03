@@ -41,7 +41,7 @@ body {
     @apply flex flex-col justify-center mx-1 my-2 px-2 rounded-md hover:bg-gray-300 
   }
   .body-frame {
-    @apply container px-4 py-2 flex-grow
+    @apply px-4 py-2 flex-grow
   }
   .footer {
     @apply sticky bottom-0 px-4 py-2 text-center border-t-gray-300 bg-gray-200 text-gray-500 border-t-2

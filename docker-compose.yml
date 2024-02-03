@@ -10,23 +10,57 @@ services:
     ports:
       - "3000:3000"
 
-  mongo:
-    image: mongo
+  mongo-primary:
+    image: mongo:7.0
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
+    command: mongod --replSet replSet --auth --keyFile /etc/mongod-keyfile
     volumes:
-      - ./data:/data/db
+      - ./mongo/data/primary:/data/db
+      - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+    networks:
+      - replset
+    
+  mongo-secondary:
+    image: mongo:7.0
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27018:27017"
+    command: mongod --replSet replSet --auth --keyFile /etc/mongod-keyfile
+    volumes:
+      - ./mongo/data/secondary:/data/db
+      - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+    networks:
+      - replset
+  
+  mongo-arbiter:
+    image: mongo:7.0
+    restart: always
+    command: mongod --replSet replSet --auth --keyFile /etc/mongod-keyfile
+    volumes:
+      - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+    networks:
+      - replset
 
   mongo-express:
     image: mongo-express
     restart: always
     environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_SERVER: mongo-primary
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
     ports:
       - "8081:8081"
+
+networks:
+  replset:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
