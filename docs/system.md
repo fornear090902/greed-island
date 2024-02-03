@@ -22,4 +22,4 @@
 | Linter    | ESLint      |
 | Formatter | Prettier    |
 | Dev Env   | Docker      |
-| IaaS      | ACA（予定） |
+| IaaS      | Azure |
