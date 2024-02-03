@@ -1,12 +1,9 @@
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
-import { uuidv7 } from "uuidv7";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export interface IUser {
     id: string;
@@ -18,16 +15,6 @@ export interface IPlayer {
     id: string;
     email: string;
 }
-
-const findUserByCredentials = (credentials: Record<'email' | 'password', string>): IPlayer | null => {
-    const { email, password } = credentials;
-
-    if (email === process.env.USER_EMAIL && password === process.env.USER_PASSWORD) {
-        return { id: uuidv7(), email };
-    } else {
-        return null;
-    }
-};
 
 const options: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -43,10 +30,12 @@ const options: NextAuthOptions = {
                     if (!credentials) {
                         throw new Error('No credentials provided')
                     }
+                    console.log(prisma)
+                    console.log(prisma.user)
 
                     const user = await prisma.user.findUnique({
                         where: {
-                            email: credentials.email
+                            email: credentials.email,
                         }
                     })
                     if (!user) {
@@ -63,7 +52,8 @@ const options: NextAuthOptions = {
                 return null
             }
         }),
-    ]
+    ],
+    secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(options);

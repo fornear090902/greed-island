@@ -1,8 +1,6 @@
 import { NextRequest } from "next/server";
-import { IUser } from "./auth/[...nextauth]/route";
 import bcrypt from 'bcrypt';
-import { PrismaClient } from "@prisma/client";
-import { signIn } from "next-auth/react";
+import prisma from "@/lib/prisma";
 
 interface SignupParams {
     email: string;
@@ -13,13 +11,10 @@ export async function POST(req: NextRequest) {
 
     const params: SignupParams = await req.json();
 
-    const user: Omit<IUser, 'id'> = {
+    const user = {
         email: params.email,
         hashedPassword: bcrypt.hashSync(params.password, 10),
     }
-
-    const prisma = new PrismaClient();
-    console.log('prisma client created')
 
     await prisma.user.create({ data: { email: user.email, hashedPassword: user.hashedPassword } });
     console.log('user created')
