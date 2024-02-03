@@ -1,8 +1,6 @@
 "use client";
-
-import { Signup } from "@/components/Signup";
-import { Status } from "@/components/player/template/Status";
 import { Player } from "@/domain/player/Player";
+import { redirect } from "@/lib/redirect";
 import { useSession } from "next-auth/react";
 
 interface Props {
@@ -15,6 +13,9 @@ export default function Home(props: Props) {
   if (status === "loading") {
     return <div>Loading...</div>;
   }
+  if (status === "authenticated") {
+    return <div>ログイン済</div>;
+  }
 
-  return <>{session ? <div>サインイン済</div> : <Signup />}</>;
+  redirect("/signin");
 }

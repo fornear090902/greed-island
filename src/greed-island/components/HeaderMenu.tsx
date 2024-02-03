@@ -11,14 +11,6 @@ import { uuidv7 } from "uuidv7";
 export function HeaderMenu() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return (
-      <div className="header-menu">
-        <div className="welcome-msg">Loading...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="header-menu">
       {
@@ -32,13 +24,9 @@ export function HeaderMenu() {
         )
       }
       <div className="login-btn">
-        {session ? (
+        {session && (
           <button onClick={signOut as MouseEventHandler<HTMLButtonElement>}>
             {library.logout}
-          </button>
-        ) : (
-          <button onClick={signIn as MouseEventHandler<HTMLButtonElement>}>
-            {library.login}
           </button>
         )}
       </div>
