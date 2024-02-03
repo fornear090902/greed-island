@@ -9,24 +9,64 @@ services:
       - .:/app
     ports:
       - "3000:3000"
+    networks:
+      - replset
 
-  mongo:
-    image: mongo
+  mongo-primary:
+    image: mongo:7.0
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
+    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
     volumes:
-      - ./data:/data/db
+      - ./mongo/data/primary:/data/db
+      - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+      - ./mongo/init/:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - replset
+    
+  mongo-secondary:
+    image: mongo:7.0
+    restart: always
+    ports:
+      - "27018:27017"
+    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
+    volumes:
+      - ./mongo/data/secondary:/data/db
+      - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+    networks:
+      - replset
+  
+  mongo-arbiter:
+    image: mongo:7.0
+    restart: always
+    ports:
+      - "27019:27017"
+    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
+    volumes:
+      - ./mongo/mongod-keyfile:/etc/mongod-keyfile:ro
+    networks:
+      - replset
 
   mongo-express:
     image: mongo-express
     restart: always
     environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_SERVER: mongo-primary
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
     ports:
       - "8081:8081"
+    depends_on:
+      - mongo-primary
+    networks:
+      - replset
+
+networks:
+  replset:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24npx prisma

@@ -1,1 +1,4 @@
-data/*
+.vscode
+
+mongo/data/*
+mongo/mongod-keyfile
