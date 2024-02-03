@@ -43,7 +43,7 @@ export function SignIn() {
 
   return (
     <div className="h-full w-full flex justify-center items-center">
-      <div className="min-w-96 rounded-md p-4 border-gray-400 border-2">
+      <div className="rounded-md p-4 border-gray-400 border-2 container sm:max-w-md">
         <div className="text-center my-2 mb-4 font-bold">ログイン</div>
         {/* <div className="flex flex-row">
           <div className="flex flex-col px-4">
