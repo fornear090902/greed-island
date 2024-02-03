@@ -7,26 +7,26 @@
 
 ## Getting Started
 
-1. Create secret key connetting mongodb replication
+### 1. Create secret key connetting mongodb replication
 ```sh
 $ openssl rand -base64 756 > mongo/mongod-keyfile
 $ sudo chmod 600 mongo/mongod-keyfile
 $ sudo chown 999 mongo/mongod-keyfile
 ```
 
-2. Get .env from owner and place to `src/greed-island/.env`
+### 2. Get .env from owner and place to `src/greed-island/.env`
 
-3. Create Docker Container
+### 3. Create Docker Container
 ```sh
 $ docker compose build && docker compose up -d
 ```
 
-4. Activate mongodb replication
+### 4. Activate mongodb replication
 ```sh
 $ docker compose exec mongo-primary mongosh admin -u root -p root /docker-entrypoint-initdb.d/init.js
 ```
 
-5. Start Greed Island App!
+### 5. Start Greed Island App!
 ```sh
 $ docker compose exec node bash
 
