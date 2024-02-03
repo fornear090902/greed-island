@@ -1,8 +1,3 @@
-
 export class Experience {
-    
-    constructor(
-        private value: number
-    ) {}
-
+  constructor(private value: number) {}
 }
