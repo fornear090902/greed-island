@@ -18,7 +18,7 @@
 | FW                   | Next.js(Web), Tailwind CSS(CSS) |
 | UI Component Library | 未定                            |
 | Auth                 | Next Auth                       |
-| DB                   | MongoDB                         |
+| DB                   | MongoDB*                         |
 | ORM                  | Prisma                          |
 | Linter               | ESLint                          |
 | Formatter            | Prettier                        |
@@ -26,3 +26,5 @@
 | Dev Env              | Docker                          |
 | CI/CD                | GitHub Actions                  |
 | IaaS                 | Azure                           |
+
+\* 厳密にトランザクション管理しないといけないデータはRDBMSにしないといけないかも
