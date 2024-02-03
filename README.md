@@ -1,7 +1,5 @@
 # Greed Island（仮）プロジェクト
 
-[システム構成](./docs/system.md)
-
 ## Prerequired
 - Docker および docker compose 環境
 
@@ -39,4 +37,6 @@ $ yarn dev
 
 ## Reference
 
-- [ツール構成参考](https://coinsbench.com/building-a-full-stack-nft-minting-dapp-using-hardhat-ethers-js-next-js-and-tailwindcss-4d1051a8140d)
+- [ツール構成](./docs/system.md)
+
+- [Web3構成参考](https://coinsbench.com/building-a-full-stack-nft-minting-dapp-using-hardhat-ethers-js-next-js-and-tailwindcss-4d1051a8140d)
