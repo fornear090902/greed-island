@@ -1,12 +1,8 @@
-import { Warrior } from "@/domain/job/Warrior";
-import { Experience } from "@/domain/player/Experience";
-import { Level } from "@/domain/player/Level";
-import { Player } from "@/domain/player/Player";
-import { Status } from "@/domain/player/Status";
+'use client';
+
 import { library } from "@/lib/japanese";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import type { Dispatch, MouseEventHandler } from "react";
-import { uuidv7 } from "uuidv7";
 
 export function HeaderMenu() {
   const { data: session, status } = useSession();

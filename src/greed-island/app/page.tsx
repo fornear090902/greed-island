@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function Home(props: Props) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   if (status === "loading") {
     return <div>Loading...</div>;
