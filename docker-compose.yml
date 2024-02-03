@@ -69,4 +69,4 @@ networks:
   replset:
     ipam:
       config:
-        - subnet: 192.168.1.0/24npx prisma
+        - subnet: 192.168.1.0/24
