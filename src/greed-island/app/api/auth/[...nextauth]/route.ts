@@ -58,6 +58,17 @@ const options: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
         })
     ],
+    callbacks: {
+        jwt: async ({ token, user, account, profile}) => {
+            if (account) {
+                token.accessToken = account.access_token
+            }
+            return token
+        },
+        session: async ({session, user, token}) => {
+            return {...session, accessToken: token.accessToken}
+        }
+    },
     session: {
         strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60,
