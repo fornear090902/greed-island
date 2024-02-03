@@ -1,5 +1,5 @@
 import { JobClass } from "./JobClass";
 
 export class Fighter {
-    protected jobClass: JobClass = JobClass.fighter
+  protected jobClass: JobClass = JobClass.fighter;
 }

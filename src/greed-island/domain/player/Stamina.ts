@@ -1,8 +1,3 @@
-
 export class Stamina {
-
-    constructor(
-        private value: number
-    ) {}
-
+  constructor(private value: number) {}
 }

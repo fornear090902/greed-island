@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -14,7 +14,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="ja">
       <head>
@@ -23,10 +22,8 @@ export default function RootLayout({
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <NextAuthProviders>
           <Header />
-          <div className="body-frame">
-            {children}
-          </div>
-          <Footer />  
+          <div className="body-frame">{children}</div>
+          <Footer />
         </NextAuthProviders>
       </body>
     </html>

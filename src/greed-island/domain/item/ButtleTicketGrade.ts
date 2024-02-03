@@ -1,9 +1,9 @@
-
 export const ButtleTicketGrade = {
-    N: 'N',
-    R: 'R',
-    SR: 'SR',
-    SSR: 'SSR'
-} as const
+  N: "N",
+  R: "R",
+  SR: "SR",
+  SSR: "SSR",
+} as const;
 
-export type ButtleTicketGrade = typeof ButtleTicketGrade[keyof typeof ButtleTicketGrade]
+export type ButtleTicketGrade =
+  (typeof ButtleTicketGrade)[keyof typeof ButtleTicketGrade];
