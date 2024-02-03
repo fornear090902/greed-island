@@ -12,14 +12,14 @@
 
 （NFT 部分は未定）
 
-| Category  | Tools      |
-| --------- | ---------- |
-| Language  | TypeScript |
-| FW        | Next.js    |
-| Auth      | Next Auth  |
-| DB        | MongoDB    |
-| ORM       | Prisma     |
-| Linter    | ESLint     |
-| Formatter | Prettier   |
-| Dev Env   | Docker     |
-| IaaS      | Azure      |
+| Category  | Tools                          |
+| --------- | ------------------------------ |
+| Language  | TypeScript                     |
+| FW        | Next.js(Web), Tailwind CSS(CSS) |
+| Auth      | Next Auth                      |
+| DB        | MongoDB                        |
+| ORM       | Prisma                         |
+| Linter    | ESLint                         |
+| Formatter | Prettier                       |
+| Dev Env   | Docker                         |
+| IaaS      | Azure                          |
