@@ -9,6 +9,8 @@ services:
       - .:/app
     ports:
       - "3000:3000"
+    networks:
+      - replset
 
   mongo-primary:
     image: mongo:7.0
@@ -58,9 +60,13 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
     ports:
       - "8081:8081"
+    depends_on:
+      - mongo-primary
+    networks:
+      - replset
 
 networks:
   replset:
     ipam:
       config:
-        - subnet: 192.168.1.0/24
+        - subnet: 192.168.1.0/24npx prisma

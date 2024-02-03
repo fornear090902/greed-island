@@ -19,7 +19,10 @@ export async function POST(req: NextRequest) {
     }
 
     const prisma = new PrismaClient();
-    await prisma.user.create({ data: { email: user.email, hashedPassword: user.hashedPassword } });
+    console.log('prisma client created')
 
-    signIn();
+    await prisma.user.create({ data: { email: user.email, hashedPassword: user.hashedPassword } });
+    console.log('user created')
+
+    // signIn();
 }
