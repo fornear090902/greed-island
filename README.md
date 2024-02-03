@@ -1,5 +1,7 @@
 # Greed Island（仮）プロジェクト
 
+[システム構成](./docs/system.md)
+
 ## Prerequired
 - Docker および docker compose 環境
 
