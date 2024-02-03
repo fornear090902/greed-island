@@ -17,10 +17,17 @@ enum Job {
   merchant
 }
 
+model User {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  password String
+  player   Player?
+}
+
 model Player {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
-  lastName   String
-  firstName  String
+  User       User    @relation(fields: [userId], references: [id])
+  userId     String  @unique @map("_userId") @db.ObjectId
   level      Int     @default(0)
   experience Int     @default(0)
   job        Job
