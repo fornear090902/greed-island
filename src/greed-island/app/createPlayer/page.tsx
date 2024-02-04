@@ -3,12 +3,35 @@
 import { library } from "@/lib/japanese";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CreatePlayer() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [player, setPlayer] = useState(null);
+  const [playerFetched, setPlayerFetched] = useState(false);
   const [name, setName] = useState("");
+  const userId = session?.userId;
+
+  useEffect(() => {
+    const fetchPlayer = async () => {
+      const res = await fetch(`/api/player/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        setPlayer(data);
+        setPlayerFetched(true);
+      }
+    };
+    if (userId) {
+      fetchPlayer();
+    }
+  }, [userId]);
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -17,14 +40,17 @@ export default function CreatePlayer() {
     return;
   }
 
-  const userId = session?.userId;
+  if (playerFetched && player) {
+    router.push("/main");
+    return;
+  }
 
   const onChangeName = ({ target }: { target: HTMLInputElement }) => {
     setName(target.value);
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
-    const res = await fetch("/api/player/create", {
+  const onSubmit = async () => {
+    const res = await fetch("/api/player", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
