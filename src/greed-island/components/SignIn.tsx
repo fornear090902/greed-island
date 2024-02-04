@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export function SignIn() {
+
   const [email, setEmail] = useState<string>("");
   const onEmailChange = ({ target }: { target: HTMLInputElement }) =>
     setEmail(target.value);

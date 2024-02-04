@@ -1,9 +1,10 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const { status } = useSession();
+  const router = useRouter();
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -12,5 +13,5 @@ export default function Home() {
     return <div>ログイン済</div>;
   }
 
-  redirect("/signin");
+  router.push("/signin");
 }
