@@ -1,10 +1,11 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
 import Google from "next-auth/providers/google";
+import { JWT } from "next-auth/jwt";
 
 const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -60,10 +61,17 @@ const options: NextAuthOptions = {
       if (account) {
         token.accessToken = account.access_token;
       }
+      if (user) {
+        token.userId = user.id;
+      }
       return token;
     },
     session: async ({ session, user, token }) => {
-      return { ...session, accessToken: token.accessToken };
+      return {
+        ...session,
+        accessToken: token.accessToken,
+        userId: token.userId,
+      };
     },
   },
   session: {

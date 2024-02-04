@@ -1,13 +1,8 @@
 "use client";
-import { Player } from "@/domain/player/Player";
-import { redirect } from "@/lib/redirect";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-interface Props {
-  player: Player | null;
-}
-
-export default function Home(props: Props) {
+export default function Home() {
   const { status } = useSession();
 
   if (status === "loading") {

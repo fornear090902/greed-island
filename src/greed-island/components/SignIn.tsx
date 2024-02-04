@@ -1,7 +1,7 @@
 "use client";
 
-import { redirect } from "@/lib/redirect";
 import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export function SignIn() {
@@ -95,7 +95,7 @@ export function SignIn() {
           <button
             type="button"
             className="bg-gray-200 p-2 px-4 rounded-lg hover:bg-gray-300"
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={async () => await signIn("google", { callbackUrl: "/createPlayer" })}
           >
             Googleアカウントでログイン
           </button>
