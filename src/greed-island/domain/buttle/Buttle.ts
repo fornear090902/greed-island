@@ -1,4 +1,4 @@
-import { Player } from "../player/Player";
+import { Player } from "../player/model/Player";
 import { ButtleSetup, IButtleSetup } from "./ButtleSetup";
 
 export interface IButtle {
