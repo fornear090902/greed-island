@@ -14,7 +14,7 @@ export function HeaderMenu() {
         session && (
           <div className="welcome-msg">
             <div>
-              {library.welcomeMessage} ほげほげ {library.honorificSymbol}
+              {library.welcomeMessage} ほげほげ {library.common.honorificSymbol}
             </div>
           </div>
         )
@@ -22,7 +22,7 @@ export function HeaderMenu() {
       <div className="login-btn">
         {session && (
           <button onClick={signOut as MouseEventHandler<HTMLButtonElement>}>
-            {library.logout}
+            {library.common.logout}
           </button>
         )}
       </div>

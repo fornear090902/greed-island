@@ -1,14 +1,10 @@
 "use client";
-import { Player } from "@/domain/player/Player";
-import { redirect } from "@/lib/redirect";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
-interface Props {
-  player: Player | null;
-}
-
-export default function Home(props: Props) {
+export default function Home() {
   const { status } = useSession();
+  const router = useRouter();
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -17,5 +13,5 @@ export default function Home(props: Props) {
     return <div>ログイン済</div>;
   }
 
-  redirect("/signin");
+  router.push("/signin");
 }
