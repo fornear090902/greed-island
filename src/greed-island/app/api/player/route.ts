@@ -15,6 +15,5 @@ export const POST = async (req: Request) => {
 
   const newPlayer = await repository.create(player);
 
-  return new Response(JSON.stringify(newPlayer))
+  return new Response(JSON.stringify(newPlayer));
 };
-

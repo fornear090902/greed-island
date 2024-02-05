@@ -5,7 +5,11 @@ import React, { useState } from "react";
 import { clientApi } from "./client-api";
 import { httpBatchLink } from "@trpc/client";
 
-export default function TrpcProvider({ childern }: { childern: React.ReactNode }) {
+export default function TrpcProvider({
+  childern,
+}: {
+  childern: React.ReactNode;
+}) {
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     clientApi.createClient({
