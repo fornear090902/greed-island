@@ -33,7 +33,7 @@ export default function CreatePlayer() {
     }
   }, [userId]);
 
-  if (status === "loading") {
+  if (status === "loading" || !playerFetched) {
     return <div>loading...</div>;
   } else if (status === "unauthenticated") {
     router.push("/signin");
