@@ -5,7 +5,7 @@ import { Level } from "@/domain/player/model/Level";
 import { PlayerRepository } from "@/domain/player/repository/PlayerRepository";
 
 export const appRouter = router({
-  createPlayer: publicProcedure
+/*   createPlayer: publicProcedure
     .input(z.object({ userId: z.string(), name: z.string().max(20) }))
     .query(async (opts) => {
       const player = new Player(
@@ -17,14 +17,15 @@ export const appRouter = router({
       const repository = new PlayerRepository();
       const newPlayer = await repository.create(player);
       return newPlayer;
-    }),
+    }), */
   getPlayerByUserId: publicProcedure
     .input(z.object({ userId: z.string() }))
-    .query(async (opts) => {
+    .mutation<Response>(async (opts) => {
       const repository = new PlayerRepository();
       const player = await repository.findByUserId(opts.input.userId);
-      return player;
-    }),
+      console.log(player);
+      return new Response(JSON.stringify(player));
+    })
 });
 
 export type AppRouter = typeof appRouter;
