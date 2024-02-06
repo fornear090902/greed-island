@@ -22,9 +22,10 @@ export default function RootLayout({
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <NextAuthProviders>
           <TrpcProvider>
-            <Header />
+            {children}
+            {/* <Header />
             <div className="body-frame">{children}</div>
-            <Footer />
+            <Footer /> */}
           </TrpcProvider>
         </NextAuthProviders>
       </body>
