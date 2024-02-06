@@ -41,6 +41,11 @@ export function SignIn() {
     }
   };
 
+  const onGoogleSignInClicked = async () => {
+    const signInResult = await signIn("google", {  });
+    console.log(signInResult)
+  }
+
   return (
     <div className="h-full w-full flex justify-center items-center">
       <div className="rounded-md p-4 border-gray-400 border-2 container sm:max-w-md">
@@ -95,9 +100,10 @@ export function SignIn() {
           <button
             type="button"
             className="bg-gray-200 p-2 px-4 rounded-lg hover:bg-gray-300"
-            onClick={async () =>
+            /* onClick={async () =>
               await signIn("google", { callbackUrl: "/createPlayer" })
-            }
+            } */
+            onClick={onGoogleSignInClicked}
           >
             Googleアカウントでログイン
           </button>
