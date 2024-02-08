@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default function Main() {
@@ -12,5 +12,9 @@ export default function Main() {
     redirect("/signin");
   }
 
-  return <div>メインページ</div>;
+  return (
+    <div>
+      <button onClick={() => signOut({callbackUrl: '/entrance'})}>いったんログアウトしとくか</button>
+    </div>
+  );
 }

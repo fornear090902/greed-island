@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { library } from "@/lib/japanese";
 import { signOut, useSession } from "next-auth/react";

@@ -6,51 +6,11 @@ import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
 import Google from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
+import { PlayerRepository } from "@/domain/player/repository/PlayerRepository";
 
 const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    // email + password は公式非推奨かつめんどくさそうなのでいったん実装しない
-    /* Credentials({
-      name: "Credentials",
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "email@example.com",
-        },
-        password: { label: "Password", type: "password" },
-      },
-      authorize: async (credentials): Promise<IUser | null> => {
-        try {
-          if (!credentials) {
-            throw new Error("No credentials provided");
-          }
-          console.log(prisma);
-          console.log(prisma.user);
-
-          const user = await prisma.user.findUnique({
-            where: {
-              email: credentials.email,
-            },
-          });
-          if (!user) {
-            throw new Error("No user found");
-          }
-          const isCorrectPassword = await bcrypt.compare(
-            credentials.password,
-            user.hashedPassword,
-          );
-          if (!isCorrectPassword) {
-            throw new Error("Invalid Credentials");
-          }
-          return user;
-        } catch (e) {
-          console.error(e);
-        }
-        return null;
-      },
-    }), */
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
@@ -62,7 +22,12 @@ const options: NextAuthOptions = {
         token.accessToken = account.access_token;
       }
       if (user) {
-        token.userId = user.id;
+        token.user = user;
+        const playerRepository = new PlayerRepository();
+        const player = await playerRepository.findByUserId(user.id);
+        if (player) {
+          token.player = player;
+        }
       }
       return token;
     },
@@ -70,7 +35,8 @@ const options: NextAuthOptions = {
       return {
         ...session,
         accessToken: token.accessToken,
-        userId: token.userId,
+        user: token.user as JWT["user"],
+        player: token.player,
       };
     },
   },

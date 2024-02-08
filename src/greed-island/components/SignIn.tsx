@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export function SignIn() {
-
   const [email, setEmail] = useState<string>("");
   const onEmailChange = ({ target }: { target: HTMLInputElement }) =>
     setEmail(target.value);
@@ -41,6 +40,11 @@ export function SignIn() {
       setError("登録に失敗しました");
     }
   };
+
+  const onGoogleSignInClicked = async () => {
+    const signInResult = await signIn("google", {  });
+    console.log(signInResult)
+  }
 
   return (
     <div className="h-full w-full flex justify-center items-center">
@@ -96,7 +100,10 @@ export function SignIn() {
           <button
             type="button"
             className="bg-gray-200 p-2 px-4 rounded-lg hover:bg-gray-300"
-            onClick={async () => await signIn("google", { callbackUrl: "/createPlayer" })}
+            /* onClick={async () =>
+              await signIn("google", { callbackUrl: "/createPlayer" })
+            } */
+            onClick={onGoogleSignInClicked}
           >
             Googleアカウントでログイン
           </button>

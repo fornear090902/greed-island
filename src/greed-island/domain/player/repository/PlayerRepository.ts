@@ -3,7 +3,7 @@ import { Player } from "../model/Player";
 import { Level } from "../model/Level";
 
 export interface IPlayerRepository {
-  create(player: Player): void;
+  save(player: Player): void;
   delete(id: string): void;
   findByUserId(userId: string): Promise<Player | null>;
 }
@@ -12,19 +12,21 @@ export class PlayerRepository
   extends Repository<Player>
   implements IPlayerRepository
 {
-  async create(player: Player): Promise<Player> {
-    const result = await this.prisma.player.create({
-      data: {
-        id: player.id,
-        name: player.name,
-        level: player.level.value,
-        user: {
-          connect: {
-            id: player.userId,
-          },
+  async save(player: Player): Promise<Player> {
+    const result = await this.prisma.player.upsert(
+      {
+        where: { userId: player.userId },
+        create: {
+          name: player.name,
+          level: player.level.value,
+          userId: player.userId,
+        },
+        update: {
+          name: player.name,
+          level: player.level.value,
         },
       },
-    });
+    );
     return new Player(
       result.id,
       result.name,

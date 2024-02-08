@@ -5,7 +5,7 @@ export class Player {
     private _id: string | undefined,
     private _name: string,
     private _level: Level,
-    private _user_id: string
+    private _user_id: string,
   ) {}
 
   get id() {
@@ -23,5 +23,4 @@ export class Player {
   get userId() {
     return this._user_id;
   }
-
 }

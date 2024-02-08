@@ -4,32 +4,22 @@ import { library } from "@/lib/japanese";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { clientApi } from "../_trpc/client-api";
 
 export default function CreatePlayer() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [player, setPlayer] = useState(null);
+  const [playerExists, setPlayerExists] = useState(false);
   const [playerFetched, setPlayerFetched] = useState(false);
   const [name, setName] = useState("");
   const userId = session?.userId;
 
   useEffect(() => {
-    const fetchPlayer = async () => {
-      const res = await fetch(`/api/player/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (res.status === 200) {
-        const data = await res.json();
-        setPlayer(data);
-        setPlayerFetched(true);
-      }
-    };
-    if (userId) {
-      fetchPlayer();
+    if (!userId) return;
+    const res = clientApi.getPlayerByUserId.useQuery({ userId });
+    if (res.isSuccess) {
+      setPlayerFetched(true);
+      setPlayerExists(res.data !== null); 
     }
   }, [userId]);
 
@@ -40,7 +30,7 @@ export default function CreatePlayer() {
     return;
   }
 
-  if (playerFetched && player) {
+  if (playerFetched && playerExists) {
     router.push("/main");
     return;
   }
@@ -50,15 +40,10 @@ export default function CreatePlayer() {
   };
 
   const onSubmit = async () => {
-    const res = await fetch("/api/player", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId, name }),
-    });
+    if (!userId) return;
+    const res = await clientApi.createPlayer.useQuery({ userId, name })
 
-    if (res.status === 200) {
+    if (res.isSuccess) {
       router.push("/main");
     } else {
       alert("登録に失敗しました");

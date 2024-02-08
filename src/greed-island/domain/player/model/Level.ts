@@ -1,8 +1,8 @@
 export class Level {
   constructor(private _value: number) {}
 
-  get value() { 
-    return this._value
+  get value() {
+    return this._value;
   }
 
   format() {
