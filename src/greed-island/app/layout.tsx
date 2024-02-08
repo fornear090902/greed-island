@@ -2,14 +2,12 @@
 
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "../components/Header";
-import { Footer } from "@/components/Footer";
 import NextAuthProviders from "@/lib/provider";
-import TrpcProvider from "./_trpc/provider";
+import { trpc } from "@/lib/trpc";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({
+const MyApp = function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -21,14 +19,13 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <NextAuthProviders>
-          <TrpcProvider>
+          <div className="h-full w-full bg-slate-900 flex flex-row justify-center text-white">
             {children}
-            {/* <Header />
-            <div className="body-frame">{children}</div>
-            <Footer /> */}
-          </TrpcProvider>
+          </div>
         </NextAuthProviders>
       </body>
     </html>
   );
 }
+
+export default trpc.withTRPC(MyApp);

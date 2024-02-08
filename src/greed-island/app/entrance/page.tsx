@@ -1,34 +1,34 @@
 'use client';
 
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { clientApi } from "../_trpc/client-api";
-import { redirect } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { trpc } from "@/lib/trpc";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
     const { data: session, status } = useSession();
     const [ path, setPath ] = useState<string>("/entrance/signin");
-    const mutation = clientApi.getPlayerByUserId.useMutation();
+    const router = useRouter();
 
-    if (session?.userId && mutation.isIdle) {
-        mutation.mutate({userId: session.userId});
-    }
+    useEffect(() => {
+        if (status === 'authenticated') {
+            if (session?.player) {
+                setPath("/main");
+            } else {
+                setPath("/entrance/createPlayer");
+            }
+        }
+    }, [status, session]);
 
-    if (status === 'unauthenticated') {
-        setPath("/enrance/signin");
-    } else if (mutation.isSuccess && mutation.data) {
-        setPath('/main')
-    }
-
-    const start = () => redirect(path);
+    const start = () => router.push(path);
 
     return (
         <div className="flex flex-col justify-evenly">
             <div>
                 <button
                     onClick={start}
-                    className="px-6 py-4 rounded-lg text-3xl bg-white hover:bg-slate-200 border-2 border-slate-950"
+                    className="px-6 py-4 rounded-lg text-3xl bg-white hover:bg-slate-200 border-2 border-slate-950 text-slate-950"
                 >Start</button>
             </div>
             <div></div>
